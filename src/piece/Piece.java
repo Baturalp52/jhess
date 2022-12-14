@@ -31,7 +31,7 @@ public abstract class Piece {
 		return player;
 	}
 
-	public static int let2Num(String letter) {
+	protected static int let2Num(String letter) {
 		switch (letter) {
 		case "A":
 			return 1;
@@ -54,7 +54,7 @@ public abstract class Piece {
 		}
 	}
 
-	public static String num2Let(int num) {
+	protected static String num2Let(int num) {
 		switch (num) {
 		case 1:
 			return "A";
@@ -81,7 +81,7 @@ public abstract class Piece {
 		return num2Let(row) + col;
 	}
 
-	public boolean checkPosition(int targetRow, int targetCol) {
+	protected boolean checkPosition(int targetRow, int targetCol) {
 		if (num2Let(targetRow) == null || num2Let(targetCol) == null)
 			return false;
 
