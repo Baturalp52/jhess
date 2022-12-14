@@ -8,5 +8,5 @@ public abstract class King extends Piece{
 		super(player, position, moveType, gameBoard);
 		// TODO Auto-generated constructor stub
 	}
-
+	//public abstract String[] availableMoves() {}; 
 }

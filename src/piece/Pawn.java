@@ -9,6 +9,6 @@ public abstract class Pawn extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	//public abstract String[] availableMoves() {}; 
 
 }

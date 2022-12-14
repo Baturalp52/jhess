@@ -8,5 +8,7 @@ public abstract class Knight extends Piece {
 		super(player, position, moveType, gameBoard);
 		// TODO Auto-generated constructor stub
 	}
+	
+	//public abstract String[] availableMoves() {}; 
 
 }
