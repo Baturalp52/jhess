@@ -1,6 +1,6 @@
 package piece;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import classes.Player;
 import enums.MOVE_TYPE;
@@ -20,7 +20,7 @@ public abstract class Piece {
 		this.gameBoard = gameBoard;
 	}
 
-	public abstract ArrayList<String> availableMoves();
+	public abstract HashSet<String> availableMoves();
 
 	public String getPosition() {
 		return position;
