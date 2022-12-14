@@ -1,5 +1,7 @@
 package history;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 import classes.Move;
@@ -14,6 +16,10 @@ public class GameHistory {
 	public GameHistory(Player[] players) {
 		super();
 		this.players = players;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		this.date = dtf.format(LocalDateTime.now());
+		this.moves = new LinkedList<Move>();
+		this.winner = null;
 	}
 
 	public Player[] getPlayers() {

@@ -10,44 +10,65 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import classes.Move;
+import classes.Player;
 import game.GameBoard;
 
 public class History implements HistoryFileReader {
-	private GameBoard unsavedHistory;
-	private ArrayList<GameHistory> history;
+	private static GameHistory unsavedHistory;
+	private static ArrayList<GameHistory> history;
 
-	public void updateHistory(Move move) {
+	public static void updateHistory(Move move) {
+
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(UNSAVED_FILE_NAME)));
+			unsavedHistory = (GameHistory) ois.readObject();
+			ois.close();
+
+			unsavedHistory.getMoves().add(move);
+
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(UNSAVED_FILE_NAME)));
+			oos.writeObject(unsavedHistory);
+			oos.close();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	public void clearHistory() throws IOException {
-		this.history.clear();
-		ObjectOutputStream oos;
+	public static void clearHistory() throws IOException {
+		history.clear();
 
-		oos = new ObjectOutputStream(new FileOutputStream(new File(this.HISTORY_FILE_NAME)));
-		oos.writeObject(this.history);
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(HISTORY_FILE_NAME)));
+		oos.writeObject(history);
 		oos.close();
 
 	}
 
-	public ArrayList<GameHistory> getHistory() {
-		return this.history;
+	public static ArrayList<GameHistory> getHistory() {
+		return history;
 	}
 
-	@SuppressWarnings("unchecked")
-	public void readFromFile() {
-		File f = new File(this.HISTORY_FILE_NAME);
-		ObjectInputStream ois = null;
+	public static void createUnsavedHistory(GameBoard gameBoard) {
+
+		Player[] players = { gameBoard.getWhitePlayer(), gameBoard.getBlackPlayer() };
+
+		unsavedHistory = new GameHistory(players);
 
 		try {
-			ois = new ObjectInputStream(new FileInputStream(f));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(UNSAVED_FILE_NAME)));
+			oos.writeObject(unsavedHistory);
+			oos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void readFromFile() {
 
 		try {
-			this.history = (ArrayList<GameHistory>) ois.readObject();
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(HISTORY_FILE_NAME)));
+			history = (ArrayList<GameHistory>) ois.readObject();
+			ois.close();
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,8 +76,17 @@ public class History implements HistoryFileReader {
 
 	}
 
-	public void saveHistory() {
+	public static void saveUnsavedHistory() {
+		try {
+			history.add(unsavedHistory);
 
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(HISTORY_FILE_NAME)));
+			oos.writeObject(history);
+			oos.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

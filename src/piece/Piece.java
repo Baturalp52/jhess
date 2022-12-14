@@ -24,4 +24,8 @@ public abstract class Piece {
 		return position;
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+
 }
