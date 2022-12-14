@@ -1,3 +1,6 @@
+package piece;
+
+import enums.MOVE_TYPE;
 
 public abstract class Rook extends Piece{
 

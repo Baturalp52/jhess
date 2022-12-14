@@ -1,3 +1,5 @@
+package piece;
+import enums.MOVE_TYPE;
 
 public abstract class Piece {
 private String player;
