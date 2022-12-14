@@ -1,8 +1,10 @@
 package piece;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 import classes.Player;
+import enums.COLOR;
 import enums.MOVE_TYPE;
 import game.GameBoard;
 
@@ -14,6 +16,17 @@ public class King extends Piece {
 	}
 
 	public HashSet<String> availableMoves() {
+		HashSet<String> allMoves = new HashSet<String>();
+		COLOR oppositeColor = COLOR.WHITE;
+		if (player.getColor() == COLOR.WHITE)
+			oppositeColor = COLOR.BLACK;
+
+		Collection<Piece> allPieces = gameBoard.getBoard().values();
+
+		for (Piece piece : allPieces)
+			if (piece.player.getColor() == oppositeColor)
+				allMoves.addAll(allMoves);
+
 		HashSet<String> moves = new HashSet<String>();
 
 		int row = let2Num(this.position.substring(0, 1));
@@ -28,7 +41,7 @@ public class King extends Piece {
 				int targetRow = row + rowStep;
 				int targetCol = col + colStep;
 
-				if (checkPosition(targetRow, targetCol))
+				if (checkPosition(targetRow, targetCol) && !allMoves.contains(rowColToPos(targetRow, targetCol)))
 					moves.add(rowColToPos(targetRow, targetCol));
 			}
 		return moves;

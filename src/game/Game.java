@@ -1,10 +1,12 @@
 package game;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import classes.Move;
 import classes.Player;
 import enums.COLOR;
+import enums.MOVE_TYPE;
 import piece.Piece;
 
 public class Game {
@@ -13,10 +15,28 @@ public class Game {
 	private static GameBoard gameBoard;
 
 	public static boolean checkGameState() {
+		Piece wKing = null;
+		Piece bKing = null;
 
-		// checking game state
-		// if there is a win returns true
-		// if not false
+		Collection<Piece> pieces = gameBoard.getBoard().values();
+
+		if (pieces.size() == 2)
+			return true;
+
+		for (Piece piece : pieces) {
+			if (piece.getMoveType() == MOVE_TYPE.KING) {
+				if (piece.getPlayer().getColor() == COLOR.BLACK)
+					wKing = piece;
+				else
+					bKing = piece;
+			}
+		}
+
+		if (wKing.availableMoves().size() == 0)
+			return true;
+
+		if (bKing.availableMoves().size() == 0)
+			return true;
 
 		return false;
 

@@ -31,6 +31,10 @@ public abstract class Piece {
 		return player;
 	}
 
+	public MOVE_TYPE getMoveType() {
+		return moveType;
+	}
+
 	protected static int let2Num(String letter) {
 		switch (letter) {
 		case "A":
@@ -85,7 +89,7 @@ public abstract class Piece {
 		if (num2Let(targetRow) == null || num2Let(targetCol) == null)
 			return false;
 
-		String targetPos = rowColToPos(targetRow,targetCol);
+		String targetPos = rowColToPos(targetRow, targetCol);
 		COLOR playerColor = player.getColor();
 
 		Piece targetPiece = gameBoard.getBoard().get(targetPos);
