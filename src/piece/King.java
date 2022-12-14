@@ -15,6 +15,7 @@ public class King extends Piece {
 
 	public ArrayList<String> availableMoves() {
 		ArrayList<String> moves = new ArrayList<String>();
+		
 		return moves;
 	};
 }
