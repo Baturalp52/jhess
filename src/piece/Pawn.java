@@ -1,17 +1,19 @@
 package piece;
 
+import classes.Player;
 import enums.MOVE_TYPE;
+import game.GameBoard;
 
-public  class Pawn extends Piece {
+public class Pawn extends Piece {
 
-	public Pawn(String player, String position, MOVE_TYPE moveType, String gameBoard) {
-		super(player, position, moveType, gameBoard);
+	public Pawn(Player player, String position, GameBoard gameBoard) {
+		super(player, position, MOVE_TYPE.PAWN, gameBoard);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public String[] availableMoves() {
 		String[] out = null;
-		return out; 
-	}; 
+		return out;
+	};
 
 }

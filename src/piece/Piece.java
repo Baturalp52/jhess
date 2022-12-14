@@ -1,20 +1,27 @@
 package piece;
+
+import classes.Player;
 import enums.MOVE_TYPE;
+import game.GameBoard;
 
 public abstract class Piece {
-private String player;
-private String position; 
-private MOVE_TYPE moveType; 
-private String gameBoard;
-public Piece(String player, String position, MOVE_TYPE moveType, String gameBoard) {
-	super();
-	this.player = player;
-	this.position = position;
-	this.moveType = moveType;
-	this.gameBoard = gameBoard;
-}
+	protected Player player;
+	protected String position;
+	protected MOVE_TYPE moveType;
+	protected GameBoard gameBoard;
 
-public abstract String[] availableMoves() ;
+	public Piece(Player player, String position, MOVE_TYPE moveType, GameBoard gameBoard) {
+		super();
+		this.player = player;
+		this.position = position;
+		this.moveType = moveType;
+		this.gameBoard = gameBoard;
+	}
 
+	public abstract String[] availableMoves();
+
+	public String getPosition() {
+		return position;
+	}
 
 }

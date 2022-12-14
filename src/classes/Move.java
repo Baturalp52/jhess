@@ -12,4 +12,14 @@ public class Move {
 		this.to = to;
 	}
 
+	public Piece getPiece() {
+		return piece;
+	}
+
+	public String getTo() {
+		return to;
+	}
+	
+	
+
 } 

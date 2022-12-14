@@ -1,15 +1,18 @@
 package piece;
 
+import classes.Player;
 import enums.MOVE_TYPE;
+import game.GameBoard;
 
-public  class Queen extends Piece{
+public class Queen extends Piece {
 
-	public Queen(String player, String position, MOVE_TYPE moveType, String gameBoard) {
-		super(player, position, moveType, gameBoard);
+	public Queen(Player player, String position, GameBoard gameBoard) {
+		super(player, position, MOVE_TYPE.QUEEN, gameBoard);
 		// TODO Auto-generated constructor stub
 	}
+
 	public String[] availableMoves() {
 		String[] out = null;
-		return out; 
-	}; 
+		return out;
+	};
 }
