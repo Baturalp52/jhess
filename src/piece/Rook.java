@@ -17,46 +17,49 @@ public class Rook extends Piece {
 
 	public HashSet<String> availableMoves() {
 		HashSet<String> moves = new HashSet<String>();
-
 		int row = let2Num(position.substring(0, 1));
 		int col = Integer.parseInt(position.substring(1, 2));
 
 		for (int i = 1; i <= 7; i++) {
+
 			int targetRow = (row + i);
 			int targetCol = col;
 			if (checkPosition(targetCol, targetCol))
 				moves.add(rowColToPos(targetRow, targetCol));
+			else
+				break;
 
 		}
 
 		for (int i = -1; i >= -7; i--) {
 			int targetRow = (row + i);
 			int targetCol = col;
-			
+
 			if (checkPosition(targetRow, targetCol))
 				moves.add(rowColToPos(targetRow, targetCol));
-		
+			else
+				break;
+
 		}
 		for (int i = 1; i <= 7; i++) {
 			int targetRow = (row);
 			int targetCol = col + i;
-			
-			if(checkPosition(targetRow, targetCol))
-				moves.add(rowColToPos(targetRow, targetCol));
-				
-			}
 
-		
+			if (checkPosition(targetRow, targetCol))
+				moves.add(rowColToPos(targetRow, targetCol));
+			else
+				break;
+		}
+
 		for (int i = -1; i >= -7; i--) {
 			int targetRow = row;
 			int targetCol = col + i;
-		
-			if(checkPosition(targetRow, targetCol))
+
+			if (checkPosition(targetRow, targetCol))
 				moves.add(rowColToPos(targetRow, targetCol));
-				
-				}
-			
-		
+			else
+				break;
+		}
 
 		return moves;
 	};

@@ -1,5 +1,6 @@
 package piece;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 import classes.Player;
@@ -16,8 +17,7 @@ public class Bishop extends Piece {
 
 	public HashSet<String> availableMoves() {
 		HashSet<String> moves = new HashSet<String>();
-		HashMap<String, Piece> board = gameBoard.getBoard();
-		COLOR playerColor = getPlayer().getColor();
+
 		int row = let2Num(position.substring(0, 1));
 		int col = Integer.parseInt(position.substring(1, 2));
 
@@ -26,24 +26,12 @@ public class Bishop extends Piece {
 			for (int colSign : sign) {
 				for (int i = 1; i <= 7; i++) {
 
-					String targetRow = num2Let(row + i * rowSign);
+					int targetRow = row + i * rowSign;
 					int targetCol = col + i * colSign;
-					if (targetRow == null || num2Let(targetCol) == null)
-						continue;
-					String targetPos = targetRow + targetCol;
-					Piece targetPiece = board.get(targetPos);
-
-					if (targetPiece == null)
-						moves.add(targetPos);
-					else {
-						if (targetPiece.getPlayer().getColor() == playerColor)
-							continue;
-						else {
-							moves.add(targetPos);
-							continue;
-						}
-
-					}
+					if (checkPosition(targetRow, targetCol))
+						moves.add(rowColToPos(targetRow, targetCol));
+					else
+						break;
 
 				}
 			}
