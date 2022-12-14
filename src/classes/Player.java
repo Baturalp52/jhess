@@ -1,3 +1,6 @@
+package classes;
+
+import enums.COLOR;
 
 public class Player {
 

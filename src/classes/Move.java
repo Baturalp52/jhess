@@ -1,4 +1,4 @@
-
+package classes;
 public class Move {
 	private String piece;
 	private String to;
