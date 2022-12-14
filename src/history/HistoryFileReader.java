@@ -1,0 +1,5 @@
+package history;
+
+interface HistoryFileReader {
+
+}
