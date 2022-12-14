@@ -29,6 +29,12 @@ public class Game {
 		board.remove(p.getPosition());
 		board.put(move.getTo(), p);
 
+		if (currentPlayer.getColor() == COLOR.BLACK) {
+			currentPlayer = gameBoard.getWhitePlayer();
+		} else {
+			currentPlayer = gameBoard.getBlackPlayer();
+		}
+
 	}
 
 	public static void initializeGame(String whitePlayerName, String blackPlayerName) {
