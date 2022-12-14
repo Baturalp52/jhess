@@ -19,7 +19,5 @@ public class Move {
 	public String getTo() {
 		return to;
 	}
-	
-	
 
-} 
+}

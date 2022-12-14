@@ -1,5 +1,7 @@
 package piece;
 
+import java.util.ArrayList;
+
 import classes.Player;
 import enums.MOVE_TYPE;
 import game.GameBoard;
@@ -18,7 +20,7 @@ public abstract class Piece {
 		this.gameBoard = gameBoard;
 	}
 
-	public abstract String[] availableMoves();
+	public abstract ArrayList<String> availableMoves();
 
 	public String getPosition() {
 		return position;

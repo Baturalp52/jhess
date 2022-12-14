@@ -1,5 +1,7 @@
 package piece;
 
+import java.util.ArrayList;
+
 import classes.Player;
 import enums.MOVE_TYPE;
 import game.GameBoard;
@@ -11,9 +13,9 @@ public class Knight extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String[] availableMoves() {
-		String[] out = null;
-		return out;
+	public ArrayList<String> availableMoves() {
+		ArrayList<String> moves = new ArrayList<String>();
+		return moves;
 	};
 
 }
