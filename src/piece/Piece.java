@@ -3,6 +3,7 @@ package piece;
 import java.util.HashSet;
 
 import classes.Player;
+import enums.COLOR;
 import enums.MOVE_TYPE;
 import game.GameBoard;
 
@@ -74,6 +75,27 @@ public abstract class Piece {
 		default:
 			return null;
 		}
+	}
+
+	protected static String rowColToPos(int row, int col) {
+		return num2Let(row) + col;
+	}
+
+	public boolean checkPosition(int targetRow, int targetCol) {
+		if (num2Let(targetRow) == null || num2Let(targetCol) == null)
+			return false;
+
+		String targetPos = rowColToPos(targetRow,targetCol);
+		COLOR playerColor = player.getColor();
+
+		Piece targetPiece = gameBoard.getBoard().get(targetPos);
+		if (targetPiece != null) {
+			if (targetPiece.getPlayer().getColor() != playerColor)
+				return true;
+		} else {
+			return true;
+		}
+		return false;
 	}
 
 }
