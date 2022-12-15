@@ -8,7 +8,7 @@ import enums.COLOR;
 import enums.MOVE_TYPE;
 import game.GameBoard;
 
-public abstract class Piece implements Serializable {
+public abstract class Piece implements Serializable, Cloneable {
 	protected Player player;
 	protected String position;
 	protected MOVE_TYPE moveType;
@@ -112,6 +112,12 @@ public abstract class Piece implements Serializable {
 	public String toString() {
 		return "Piece [player=" + player + ", position=" + position + ", moveType=" + moveType + ", gameBoard="
 				+ gameBoard + "]";
+	}
+
+	public Piece clone() throws CloneNotSupportedException {
+		Piece p = (Piece) super.clone();
+
+		return p;
 	}
 
 }

@@ -3,6 +3,7 @@ package history;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import classes.Move;
@@ -53,6 +54,12 @@ public class GameHistory implements Serializable {
 
 	public void setWinner(Player winner) {
 		this.winner = winner;
+	}
+
+	@Override
+	public String toString() {
+		return "GameHistory\ndate=" + date  + ", winner="
+				+ winner.getName();
 	}
 
 }

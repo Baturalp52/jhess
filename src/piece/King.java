@@ -26,7 +26,6 @@ public class King extends Piece {
 		for (Piece piece : allPieces)
 			if (piece.player.getColor() == oppositeColor && piece.moveType != MOVE_TYPE.KING)
 				allMoves.addAll(piece.availableMoves(true));
-		System.out.println("King: " + allMoves);
 		HashSet<String> moves = new HashSet<String>();
 
 		int row = let2Num(this.position.substring(0, 1));

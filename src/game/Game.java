@@ -58,8 +58,8 @@ public class Game {
 
 		board.remove(p.getPosition());
 		board.put(move.getTo(), p);
-		p.setPosition(move.getTo());
 		History.updateHistory(move);
+		p.setPosition(move.getTo());
 		if (currentPlayer.getColor() == COLOR.BLACK) {
 			currentPlayer = gameBoard.getWhitePlayer();
 		} else {

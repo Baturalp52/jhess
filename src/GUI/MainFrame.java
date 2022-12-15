@@ -31,6 +31,9 @@ import java.awt.Button;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class MainFrame extends JFrame {
 
@@ -50,6 +53,9 @@ public class MainFrame extends JFrame {
 	CustomBoardButton selectedButton;
 	private JLabel currentPlayerNameLabel;
 	private AlertDialog alertDialog = new AlertDialog();
+	GetPlayerNameDialog getPlayerName;
+	Player wPlayer = new Player(COLOR.WHITE, "");
+	Player bPlayer = new Player(COLOR.BLACK, "");
 
 	/**
 	 * Launch the application.
@@ -58,7 +64,6 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Game.initializeGame("White", "Black");
 					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -74,137 +79,174 @@ public class MainFrame extends JFrame {
 	 * @throws IOException
 	 */
 	public MainFrame() throws IOException {
-		this.historyFrame = new HistoryFrame(this);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 895, 800);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setResizable(false);
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		panel.setBounds(80, 100, 640, 640);
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(0, 8, 0, 0));
-
-		currentPlayerNameLabel = new JLabel(Game.currentPlayer.getName() + "'s turn!");
-		currentPlayerNameLabel.setOpaque(true);
-		currentPlayerNameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		currentPlayerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		currentPlayerNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 44));
-		currentPlayerNameLabel.setBackground(Game.currentPlayer.getColor() == COLOR.BLACK ? blackEnabledBackgroundColor
-				: whiteEnabledBackgroundColor);
-		currentPlayerNameLabel.setBounds(218, 10, 366, 60);
-		contentPane.add(currentPlayerNameLabel);
-
-		Button button = new Button("Show History");
-		button.addMouseListener(new MouseAdapter() {
+		JFrame parent = this;
+		getPlayerName = new GetPlayerNameDialog(wPlayer);
+		getPlayerName.lblNewLabel.setText("Enter white player's name:");
+		getPlayerName.addWindowListener(new WindowAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				historyFrame.setVisible(true);
+			public void windowClosed(WindowEvent e) {
+				for (WindowListener wl : getPlayerName.getWindowListeners())
+					getPlayerName.removeWindowListener(wl);
+
+				getPlayerName.player = bPlayer;
+				getPlayerName.lblNewLabel.setText("Enter black player's name:");
+				getPlayerName.setVisible(true);
+				getPlayerName.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						for (WindowListener wl : getPlayerName.getWindowListeners())
+							getPlayerName.removeWindowListener(wl);
+						Game.initializeGame(wPlayer.getName(), bPlayer.getName());
+						historyFrame = new HistoryFrame(parent);
+
+						setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						setBounds(100, 100, 895, 800);
+						contentPane = new JPanel();
+						contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+						setResizable(false);
+
+						setContentPane(contentPane);
+						contentPane.setLayout(null);
+
+						panel.setBounds(80, 100, 640, 640);
+						contentPane.add(panel);
+						panel.setLayout(new GridLayout(0, 8, 0, 0));
+
+						currentPlayerNameLabel = new JLabel(Game.currentPlayer.getName() + "'s turn!");
+						currentPlayerNameLabel.setOpaque(true);
+						currentPlayerNameLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+						currentPlayerNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						currentPlayerNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 44));
+						currentPlayerNameLabel.setBackground(
+								Game.currentPlayer.getColor() == COLOR.BLACK ? blackEnabledBackgroundColor
+										: whiteEnabledBackgroundColor);
+						currentPlayerNameLabel.setBounds(218, 10, 366, 60);
+						contentPane.add(currentPlayerNameLabel);
+
+						Button button = new Button("Show History");
+						button.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								historyFrame.setVisible(true);
+								historyFrame.requestFocus();
+							}
+						});
+						button.setBounds(726, 100, 145, 46);
+						contentPane.add(button);
+
+						JPanel panel_1_1 = new JPanel();
+						panel_1_1.setBounds(0, 101, 80, 639);
+						contentPane.add(panel_1_1);
+						panel_1_1.setLayout(new GridLayout(8, 8, 0, 0));
+
+						JLabel lblNewLabel_8 = new JLabel("A");
+						lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_8);
+
+						JLabel lblNewLabel_1_1 = new JLabel("B");
+						lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_1_1);
+
+						JLabel lblNewLabel_2_1 = new JLabel("C");
+						lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_2_1);
+
+						JLabel lblNewLabel_3_1 = new JLabel("D");
+						lblNewLabel_3_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_3_1);
+
+						JLabel lblNewLabel_4_1 = new JLabel("E");
+						lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_4_1);
+
+						JLabel lblNewLabel_5_1 = new JLabel("F");
+						lblNewLabel_5_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_5_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_5_1);
+
+						JLabel lblNewLabel_6_1 = new JLabel("G");
+						lblNewLabel_6_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_6_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_6_1);
+
+						JLabel lblNewLabel_7_1 = new JLabel("H");
+						lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1_1.add(lblNewLabel_7_1);
+
+						JPanel panel_1 = new JPanel();
+						panel_1.setBounds(80, 74, 640, 27);
+						contentPane.add(panel_1);
+						panel_1.setLayout(new GridLayout(0, 8, 0, 0));
+
+						JLabel lblNewLabel = new JLabel("1");
+						lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel);
+
+						JLabel lblNewLabel_1 = new JLabel("2");
+						lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel_1);
+
+						JLabel lblNewLabel_2 = new JLabel("3");
+						lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel_2);
+
+						JLabel lblNewLabel_3 = new JLabel("4");
+						lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel_3);
+
+						JLabel lblNewLabel_4 = new JLabel("5");
+						lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel_4);
+
+						JLabel lblNewLabel_5 = new JLabel("6");
+						lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel_5);
+
+						JLabel lblNewLabel_6 = new JLabel("7");
+						lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel_6);
+
+						JLabel lblNewLabel_7 = new JLabel("8");
+						lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
+						lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblNewLabel_7);
+
+						Button button_1 = new Button("Clear History");
+						button_1.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								History.clearHistory();
+							}
+						});
+						button_1.setActionCommand("Clear History");
+						button_1.setBounds(726, 152, 145, 46);
+						contentPane.add(button_1);
+
+						try {
+							addButtons();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
 			}
 		});
-		button.setBounds(726, 100, 145, 46);
-		contentPane.add(button);
-
-		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBounds(0, 101, 80, 639);
-		contentPane.add(panel_1_1);
-		panel_1_1.setLayout(new GridLayout(8, 8, 0, 0));
-
-		JLabel lblNewLabel_8 = new JLabel("A");
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_8);
-
-		JLabel lblNewLabel_1_1 = new JLabel("B");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_1_1);
-
-		JLabel lblNewLabel_2_1 = new JLabel("C");
-		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_2_1);
-
-		JLabel lblNewLabel_3_1 = new JLabel("D");
-		lblNewLabel_3_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_3_1);
-
-		JLabel lblNewLabel_4_1 = new JLabel("E");
-		lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_4_1);
-
-		JLabel lblNewLabel_5_1 = new JLabel("F");
-		lblNewLabel_5_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_5_1);
-
-		JLabel lblNewLabel_6_1 = new JLabel("G");
-		lblNewLabel_6_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_6_1);
-
-		JLabel lblNewLabel_7_1 = new JLabel("H");
-		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1_1.add(lblNewLabel_7_1);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(80, 74, 640, 27);
-		contentPane.add(panel_1);
-		panel_1.setLayout(new GridLayout(0, 8, 0, 0));
-
-		JLabel lblNewLabel = new JLabel("1");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel);
-
-		JLabel lblNewLabel_1 = new JLabel("2");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_2 = new JLabel("3");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel_2);
-
-		JLabel lblNewLabel_3 = new JLabel("4");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel_3);
-
-		JLabel lblNewLabel_4 = new JLabel("5");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel_4);
-
-		JLabel lblNewLabel_5 = new JLabel("6");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel_5);
-
-		JLabel lblNewLabel_6 = new JLabel("7");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel_6);
-
-		JLabel lblNewLabel_7 = new JLabel("8");
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_1.add(lblNewLabel_7);
-
-		Button button_1 = new Button("Clear History");
-		button_1.setActionCommand("Clear History");
-		button_1.setBounds(726, 152, 145, 46);
-		contentPane.add(button_1);
-
-		addButtons();
+		getPlayerName.setVisible(true);
 
 	}
 
@@ -241,7 +283,7 @@ public class MainFrame extends JFrame {
 			alertDialog.setVisible(true);
 			History.saveUnsavedHistory();
 			Game.getGameBoard().getBoard().clear();
-			Game.initializeGame("White", "Black");
+			Game.initializeGame(wPlayer.getName(), bPlayer.getName());
 			refreshAllButtons();
 			currentPlayerNameLabel.setText(Game.currentPlayer.getName() + "'s turn!");
 		}
@@ -279,7 +321,6 @@ public class MainFrame extends JFrame {
 	private void showAvailableMoves(Piece piece) throws IOException {
 		refreshAllButtons();
 		HashSet<String> availableMoves = piece.availableMoves(false);
-		System.out.println(availableMoves + " " + piece.getMoveType());
 
 		for (Component component : this.panel.getComponents()) {
 			CustomBoardButton button = (CustomBoardButton) component;

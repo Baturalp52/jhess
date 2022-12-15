@@ -48,16 +48,16 @@ public class CustomBoardButton extends JButton {
 	public void refreshButton() throws IOException {
 		retrievePiece();
 		if (piece != null) {
-				String colorCode = "w";
-				if (piece.getPlayer().getColor() == COLOR.BLACK)
-					colorCode = "b";
-				Image image = ImageIO.read(new File("src/GUI/assets/" + colorCode + getPhotoName()))
-						.getScaledInstance(60, 60, Image.SCALE_DEFAULT);
+			String colorCode = "w";
+			if (piece.getPlayer().getColor() == COLOR.BLACK)
+				colorCode = "b";
+			Image image = ImageIO.read(new File("src/GUI/assets/" + colorCode + getPhotoName())).getScaledInstance(60,
+					60, Image.SCALE_DEFAULT);
 
-				setIcon(new ImageIcon(image));
-				if (piece.getPlayer().getColor() == Game.currentPlayer.getColor()) {
-					setEnabled(true);
-			}else {
+			setIcon(new ImageIcon(image));
+			if (piece.getPlayer().getColor() == Game.currentPlayer.getColor()) {
+				setEnabled(true);
+			} else {
 				setEnabled(false);
 			}
 		} else {

@@ -19,17 +19,29 @@ public class History implements HistoryFileReader {
 	private static ArrayList<GameHistory> history = new ArrayList<GameHistory>();
 
 	public static void updateHistory(Move move) {
-
-		unsavedHistory.getMoves().add(move);
+		Move _move = null;
+		try {
+			_move = new Move(move.getPiece().clone(), move.getTo());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		unsavedHistory.getMoves().add(_move);
 
 	}
 
-	public static void clearHistory() throws IOException {
+	public static void clearHistory() {
 		history.clear();
 
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(HISTORY_FILE_NAME)));
-		oos.writeObject(history);
-		oos.close();
+		ObjectOutputStream oos;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream(new File(HISTORY_FILE_NAME)));
+			oos.writeObject(history);
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
