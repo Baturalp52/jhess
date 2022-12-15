@@ -1,5 +1,6 @@
 package game;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import classes.Player;
@@ -12,7 +13,7 @@ import piece.Piece;
 import piece.Queen;
 import piece.Rook;
 
-public class GameBoard {
+public class GameBoard implements Serializable {
 	private Player whitePlayer;
 	private Player blackPlayer;
 	private HashMap<String, Piece> board;

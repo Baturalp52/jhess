@@ -1,5 +1,6 @@
 package piece;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 import classes.Player;
@@ -7,7 +8,7 @@ import enums.COLOR;
 import enums.MOVE_TYPE;
 import game.GameBoard;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable {
 	protected Player player;
 	protected String position;
 	protected MOVE_TYPE moveType;
@@ -21,10 +22,14 @@ public abstract class Piece {
 		this.gameBoard = gameBoard;
 	}
 
-	public abstract HashSet<String> availableMoves();
+	public abstract HashSet<String> availableMoves(boolean includeOwnPiece);
 
 	public String getPosition() {
 		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	public Player getPlayer() {
@@ -81,11 +86,11 @@ public abstract class Piece {
 		}
 	}
 
-	protected static String rowColToPos(int row, int col) {
+	public static String rowColToPos(int row, int col) {
 		return num2Let(row) + col;
 	}
 
-	protected boolean checkPosition(int targetRow, int targetCol) {
+	protected boolean checkPosition(int targetRow, int targetCol, boolean includeOwnPiece) {
 		if (num2Let(targetRow) == null || num2Let(targetCol) == null)
 			return false;
 
@@ -94,12 +99,19 @@ public abstract class Piece {
 
 		Piece targetPiece = gameBoard.getBoard().get(targetPos);
 		if (targetPiece != null) {
-			if (targetPiece.getPlayer().getColor() != playerColor)
+			if (targetPiece.getPlayer().getColor() != playerColor || includeOwnPiece)
 				return true;
+			return false;
 		} else {
 			return true;
 		}
-		return false;
+
+	}
+
+	@Override
+	public String toString() {
+		return "Piece [player=" + player + ", position=" + position + ", moveType=" + moveType + ", gameBoard="
+				+ gameBoard + "]";
 	}
 
 }

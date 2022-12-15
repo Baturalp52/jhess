@@ -13,7 +13,7 @@ public class Knight extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HashSet<String> availableMoves() {
+	public HashSet<String> availableMoves(boolean includeOwnPiece) {
 		HashSet<String> moves = new HashSet<String>();
 
 		int row = let2Num(this.position.substring(0, 1));
@@ -23,13 +23,13 @@ public class Knight extends Piece {
 
 		for (int rowStep : steps) {
 			for (int colStep : steps) {
-				if (Math.abs(col) == Math.abs(row))
+				if (Math.abs(rowStep) == Math.abs(colStep))
 					continue;
 
 				int targetRow = row + rowStep;
 				int targetCol = col + colStep;
 
-				if (checkPosition(targetRow, targetCol)) {
+				if (checkPosition(targetRow, targetCol, includeOwnPiece)) {
 					moves.add(rowColToPos(targetRow, targetCol));
 				}
 			}

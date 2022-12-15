@@ -15,7 +15,7 @@ public class Rook extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HashSet<String> availableMoves() {
+	public HashSet<String> availableMoves(boolean includeOwnPiece) {
 		HashSet<String> moves = new HashSet<String>();
 		int row = let2Num(position.substring(0, 1));
 		int col = Integer.parseInt(position.substring(1, 2));
@@ -24,9 +24,14 @@ public class Rook extends Piece {
 
 			int targetRow = (row + i);
 			int targetCol = col;
-			if (checkPosition(targetCol, targetCol))
-				moves.add(rowColToPos(targetRow, targetCol));
-			else
+			if (checkPosition(targetRow, targetCol, includeOwnPiece)) {
+				String targetPos = rowColToPos(targetRow, targetCol);
+				moves.add(targetPos);
+				Piece targetedPiece = gameBoard.getBoard().get(targetPos);
+				if (targetedPiece != null) {
+					break;
+				}
+			} else
 				break;
 
 		}
@@ -35,9 +40,14 @@ public class Rook extends Piece {
 			int targetRow = (row + i);
 			int targetCol = col;
 
-			if (checkPosition(targetRow, targetCol))
-				moves.add(rowColToPos(targetRow, targetCol));
-			else
+			if (checkPosition(targetRow, targetCol, includeOwnPiece)) {
+				String targetPos = rowColToPos(targetRow, targetCol);
+				moves.add(targetPos);
+				Piece targetedPiece = gameBoard.getBoard().get(targetPos);
+				if (targetedPiece != null) {
+					break;
+				}
+			} else
 				break;
 
 		}
@@ -45,9 +55,14 @@ public class Rook extends Piece {
 			int targetRow = (row);
 			int targetCol = col + i;
 
-			if (checkPosition(targetRow, targetCol))
-				moves.add(rowColToPos(targetRow, targetCol));
-			else
+			if (checkPosition(targetRow, targetCol, includeOwnPiece)) {
+				String targetPos = rowColToPos(targetRow, targetCol);
+				moves.add(targetPos);
+				Piece targetedPiece = gameBoard.getBoard().get(targetPos);
+				if (targetedPiece != null) {
+					break;
+				}
+			} else
 				break;
 		}
 
@@ -55,9 +70,14 @@ public class Rook extends Piece {
 			int targetRow = row;
 			int targetCol = col + i;
 
-			if (checkPosition(targetRow, targetCol))
-				moves.add(rowColToPos(targetRow, targetCol));
-			else
+			if (checkPosition(targetRow, targetCol, includeOwnPiece)) {
+				String targetPos = rowColToPos(targetRow, targetCol);
+				moves.add(targetPos);
+				Piece targetedPiece = gameBoard.getBoard().get(targetPos);
+				if (targetedPiece != null) {
+					break;
+				}
+			} else
 				break;
 		}
 

@@ -2,11 +2,13 @@ package game;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import classes.Move;
 import classes.Player;
 import enums.COLOR;
 import enums.MOVE_TYPE;
+import history.History;
 import piece.Piece;
 
 public class Game {
@@ -15,27 +17,35 @@ public class Game {
 	private static GameBoard gameBoard;
 
 	public static boolean checkGameState() {
-		Piece wKing = null;
-		Piece bKing = null;
 
 		Collection<Piece> pieces = gameBoard.getBoard().values();
 
 		if (pieces.size() == 2)
 			return true;
+		Piece wKing = null;
+		Piece bKing = null;
 
-		for (Piece piece : pieces) {
+		for (Piece piece : pieces)
 			if (piece.getMoveType() == MOVE_TYPE.KING) {
-				if (piece.getPlayer().getColor() == COLOR.BLACK)
+				if (piece.getPlayer().getColor() == COLOR.WHITE)
 					wKing = piece;
 				else
 					bKing = piece;
 			}
+
+		HashSet<String> allWhiteMoves = new HashSet<String>();
+		HashSet<String> allBlackMoves = new HashSet<String>();
+
+		for (Piece piece : pieces) {
+			if (piece.getPlayer().getColor() == COLOR.WHITE && piece.getMoveType() != MOVE_TYPE.KING)
+				allWhiteMoves.addAll(piece.availableMoves(true));
+			if (piece.getPlayer().getColor() == COLOR.BLACK && piece.getMoveType() != MOVE_TYPE.KING)
+				allBlackMoves.addAll(piece.availableMoves(true));
 		}
-
-		if (wKing.availableMoves().size() == 0)
+		
+		if (allBlackMoves.contains(wKing.getPosition()) && wKing.availableMoves(false).size() == 0)
 			return true;
-
-		if (bKing.availableMoves().size() == 0)
+		if (allWhiteMoves.contains(bKing.getPosition()) && bKing.availableMoves(false).size() == 0)
 			return true;
 
 		return false;
@@ -48,7 +58,8 @@ public class Game {
 
 		board.remove(p.getPosition());
 		board.put(move.getTo(), p);
-
+		p.setPosition(move.getTo());
+		History.updateHistory(move);
 		if (currentPlayer.getColor() == COLOR.BLACK) {
 			currentPlayer = gameBoard.getWhitePlayer();
 		} else {
@@ -64,7 +75,12 @@ public class Game {
 		currentPlayer = whitePlayer;
 
 		gameBoard = new GameBoard(whitePlayer, blackPlayer);
+		History.createUnsavedHistory(gameBoard);
 
+	}
+
+	public static GameBoard getGameBoard() {
+		return gameBoard;
 	}
 
 }

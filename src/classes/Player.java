@@ -1,8 +1,10 @@
 package classes;
 
+import java.io.Serializable;
+
 import enums.COLOR;
 
-public class Player {
+public class Player implements Serializable {
 
 	private COLOR color;
 	private String name;

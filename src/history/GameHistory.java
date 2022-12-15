@@ -1,5 +1,6 @@
 package history;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -7,7 +8,7 @@ import java.util.LinkedList;
 import classes.Move;
 import classes.Player;
 
-public class GameHistory {
+public class GameHistory implements Serializable {
 	private Player[] players;
 	private String date;
 	private LinkedList<Move> moves;

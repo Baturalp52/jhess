@@ -1,8 +1,10 @@
 package classes;
 
+import java.io.Serializable;
+
 import piece.Piece;
 
-public class Move {
+public class Move implements Serializable {
 	private Piece piece;
 	private String to;
 
@@ -18,6 +20,11 @@ public class Move {
 
 	public String getTo() {
 		return to;
+	}
+
+	@Override
+	public String toString() {
+		return "Move [piece=" + piece + ", to=" + to + "]";
 	}
 
 }
