@@ -9,9 +9,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.TreeSet;
 
 import classes.Move;
 import classes.Player;
+import enums.COLOR;
+import enums.FILTER_WINNER;
+import enums.ORDER_HISTORY;
 import game.GameBoard;
 
 public class History implements HistoryFileReader {
@@ -47,6 +52,51 @@ public class History implements HistoryFileReader {
 
 	public static ArrayList<GameHistory> getHistory() {
 		return history;
+	}
+
+	public static ArrayList<GameHistory> getFilteredAndOrderedHistory(HistoryFilterAndOrder filter) {
+
+		ArrayList<GameHistory> filteredHistory = new ArrayList<GameHistory>();
+
+		if (filter.getFilterWinner() != FILTER_WINNER.ALL) {
+			COLOR color = filter.getFilterWinner() == FILTER_WINNER.WHITE ? COLOR.WHITE : COLOR.BLACK;
+
+			for (GameHistory gh : history)
+				if (gh.getWinner().getColor() == color)
+					filteredHistory.add(gh);
+
+		} else {
+			filteredHistory.addAll(history);
+		}
+
+		if (filter.getMoveRange() != null) {
+			ArrayList<GameHistory> _filtered = new ArrayList<GameHistory>();
+			for (GameHistory gh : filteredHistory) {
+
+				int min = filter.getMoveRange()[0];
+				int max = filter.getMoveRange()[1];
+				int count = gh.getMoves().size();
+				if (count >= min && count <= max) {
+					_filtered.add(gh);
+				}
+			}
+
+			filteredHistory = new ArrayList<GameHistory>(_filtered);
+		}
+
+		if (filter.getOrderBy() == ORDER_HISTORY.DATE_DESC) {
+			Collections.reverse(filteredHistory);
+			return filteredHistory;
+		}
+		if (filter.getOrderBy() == ORDER_HISTORY.MOVE_COUNT_ASC)
+			return new ArrayList<GameHistory>(new TreeSet<GameHistory>(filteredHistory));
+		if (filter.getOrderBy() == ORDER_HISTORY.MOVE_COUNT_DESC) {
+			ArrayList<GameHistory> ordered = new ArrayList<GameHistory>(new TreeSet<GameHistory>(filteredHistory));
+			Collections.reverse(ordered);
+			return ordered;
+		}
+
+		return filteredHistory;
 	}
 
 	public static void createUnsavedHistory(GameBoard gameBoard) {

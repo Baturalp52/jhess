@@ -5,11 +5,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Objects;
 
 import classes.Move;
 import classes.Player;
 
-public class GameHistory implements Serializable {
+public class GameHistory implements Serializable, Comparable<GameHistory> {
 	private Player[] players;
 	private String date;
 	private LinkedList<Move> moves;
@@ -57,9 +58,37 @@ public class GameHistory implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(players);
+		result = prime * result + Objects.hash(date, moves, winner);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GameHistory other = (GameHistory) obj;
+		return Objects.equals(date, other.date) && Objects.equals(moves, other.moves)
+				&& Arrays.equals(players, other.players) && Objects.equals(winner, other.winner);
+	}
+
+	@Override
 	public String toString() {
-		return "GameHistory\ndate=" + date  + ", winner="
-				+ winner.getName();
+		return "GameHistory\ndate=" + date + ", winner=" + winner.getName();
+	}
+
+	@Override
+	public int compareTo(GameHistory o) {
+		if (this.moves.size() - o.moves.size() >= 0)
+			return 1;
+		return -1;
 	}
 
 }

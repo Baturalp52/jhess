@@ -33,6 +33,9 @@ public class Game {
 					bKing = piece;
 			}
 
+		if (wKing == null || bKing == null)
+			return true;
+
 		HashSet<String> allWhiteMoves = new HashSet<String>();
 		HashSet<String> allBlackMoves = new HashSet<String>();
 
@@ -42,7 +45,7 @@ public class Game {
 			if (piece.getPlayer().getColor() == COLOR.BLACK && piece.getMoveType() != MOVE_TYPE.KING)
 				allBlackMoves.addAll(piece.availableMoves(true));
 		}
-		
+
 		if (allBlackMoves.contains(wKing.getPosition()) && wKing.availableMoves(false).size() == 0)
 			return true;
 		if (allWhiteMoves.contains(bKing.getPosition()) && bKing.availableMoves(false).size() == 0)

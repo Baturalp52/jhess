@@ -51,7 +51,7 @@ public class Pawn extends Piece {
 			return moves;
 		}
 
-		if (isFirstMove) {
+		if (isFirstMove && moves.size() != 0) {
 			targetRow = row + step * 2;
 			targetCol = col;
 			targetPos = rowColToPos(targetRow, targetCol);

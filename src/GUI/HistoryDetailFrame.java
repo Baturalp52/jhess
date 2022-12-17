@@ -65,6 +65,7 @@ public class HistoryDetailFrame extends JFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 10, 491, 627);
 		scrollPane.setBorder(null);
+		scrollPane.setViewportView(list);
 		contentPane.add(scrollPane);
 
 		lblNewLabel = new JLabel("Winner:");

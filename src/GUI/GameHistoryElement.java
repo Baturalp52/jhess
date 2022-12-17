@@ -3,25 +3,26 @@ package GUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 
+import enums.COLOR;
 import history.GameHistory;
-import history.History;
 
 public class GameHistoryElement extends JPanel implements ListCellRenderer<GameHistory> {
 	JLabel winnerIconLabel;
 	JLabel winnerNameLabel;
-	JLabel lblNewLabel_1_1;
+	JLabel dateAndTimeLabel;
+	JLabel moveCountLabel;
 
 	public GameHistoryElement() {
 
@@ -32,6 +33,7 @@ public class GameHistoryElement extends JPanel implements ListCellRenderer<GameH
 		setPreferredSize(new Dimension(90, 100));
 
 		winnerIconLabel = new JLabel("");
+		winnerIconLabel.setOpaque(true);
 		winnerIconLabel.setBounds(10, 10, 27, 27);
 		winnerIconLabel.setBorder(new LineBorder(new Color(0)));
 		add(winnerIconLabel);
@@ -40,9 +42,13 @@ public class GameHistoryElement extends JPanel implements ListCellRenderer<GameH
 		winnerNameLabel.setBounds(45, 10, 190, 19);
 		add(winnerNameLabel);
 
-		lblNewLabel_1_1 = new JLabel();
-		lblNewLabel_1_1.setBounds(45, 36, 190, 19);
-		add(lblNewLabel_1_1);
+		dateAndTimeLabel = new JLabel();
+		dateAndTimeLabel.setBounds(45, 36, 190, 19);
+		add(dateAndTimeLabel);
+
+		moveCountLabel = new JLabel();
+		moveCountLabel.setBounds(45, 62, 190, 19);
+		add(moveCountLabel);
 
 	}
 
@@ -60,9 +66,21 @@ public class GameHistoryElement extends JPanel implements ListCellRenderer<GameH
 	@Override
 	public Component getListCellRendererComponent(JList<? extends GameHistory> list, GameHistory gameHistory, int index,
 			boolean isSelected, boolean cellHasFocus) {
-		lblNewLabel_1_1.setText("Date Time: " + gameHistory.getDate());
+		dateAndTimeLabel.setText("Date Time: " + gameHistory.getDate());
 		winnerNameLabel.setText("Winner Name: " + gameHistory.getWinner().getName());
-		winnerIconLabel.setIcon(new ImageIcon("src/GUI/assets/bperson.png"));
+		moveCountLabel.setText("Move Count: " + gameHistory.getMoves().size());
+		Image image;
+		try {
+			image = ImageIO.read(new File("src/GUI/assets/" + getPhotoName(gameHistory))).getScaledInstance(23, 23,
+					Image.SCALE_DEFAULT);
+			winnerIconLabel.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		winnerIconLabel.setBackground(new Color(255, 255, 255));
+		if (gameHistory.getWinner().getColor() == COLOR.WHITE)
+			winnerIconLabel.setBackground(new Color(0, 0, 0));
 
 		if (isSelected) {
 			setBackground(list.getSelectionBackground());

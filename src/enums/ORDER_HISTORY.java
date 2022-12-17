@@ -1,0 +1,5 @@
+package enums;
+
+public enum ORDER_HISTORY {
+	DATE_DESC, DATE_ASC, MOVE_COUNT_DESC, MOVE_COUNT_ASC
+}
