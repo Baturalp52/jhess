@@ -1,16 +1,16 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class AlertDialog extends JDialog {
 
@@ -34,6 +34,8 @@ public class AlertDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public AlertDialog() {
+		setTitle("JHess");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("assets\\icon.png"));
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

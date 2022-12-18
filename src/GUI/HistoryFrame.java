@@ -5,6 +5,7 @@ import java.awt.Checkbox;
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
@@ -57,6 +58,8 @@ public class HistoryFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public HistoryFrame(JFrame parentFrame) {
+		setTitle("JHess - Match History");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("assets\\icon.png"));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {

@@ -1,35 +1,31 @@
 package GUI;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import enums.COLOR;
-import game.Game;
-import history.History;
-import piece.Piece;
-
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.HashSet;
 
-import java.awt.Color;
-import java.awt.Component;
-
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import classes.Move;
 import classes.Player;
-
-import java.awt.Button;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import enums.COLOR;
+import game.Game;
+import history.History;
+import piece.Piece;
 
 public class MainFrame extends JFrame {
 
@@ -58,6 +54,8 @@ public class MainFrame extends JFrame {
 	 * @throws IOException
 	 */
 	public MainFrame(String wPlayerName, String bPlayerName) throws IOException {
+		setTitle("JHess");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("assets\\icon.png"));
 		this.wPlayerName = wPlayerName;
 		JFrame parent = this;
 		Game.initializeGame(wPlayerName, bPlayerName);

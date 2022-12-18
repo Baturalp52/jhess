@@ -1,22 +1,23 @@
 package GUI;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Button;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 import classes.Move;
 import history.GameHistory;
-
-import javax.swing.JLabel;
-import javax.swing.DefaultListModel;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.Font;
 
 public class HistoryDetailFrame extends JFrame {
 
@@ -36,6 +37,8 @@ public class HistoryDetailFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public HistoryDetailFrame(JFrame parentFrame) {
+		setTitle("JHess - Match Details");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("assets\\icon.png"));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
